@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Gizi & Risiko Diabetes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Kalkulator Gizi & Risiko Diabetes</h2>
+    <p class="subtitle">
+        Hitung status gizi, kebutuhan energi harian, dan estimasi risiko diabetes
+    </p>
+
+    <!-- NAVIGASI -->
+     <div class="nav">
+        <a href="/">Kalkulator</a>
+        <a href="/edukasi">Edukasi</a>
+    </div>
+
+    <form method="post">
+
+        <div class="section">
+            <div class="section-title">Data Antropometri</div>
+
+            <label>Berat Badan (kg)</label>
+            <input type="range" name="bb" min="30" max="150" step="0.1"
+                   value="60" oninput="bbOutput.value = this.value">
+            <div class="output">
+                <output name="bbOutput">60</output> kg
+            </div>
+
+            <label>Tinggi Badan (cm)</label>
+            <input type="range" name="tb" min="130" max="200" step="1"
+                   value="165" oninput="tbOutput.value = this.value">
+            <div class="output">
+                <output name="tbOutput">165</output> cm
+            </div>
+
+            <label>Usia (tahun)</label>
+            <input type="number" name="usia" min="10" max="100"
+                   placeholder="Contoh: 21" required>
+
+            <label>Jenis Kelamin</label>
+            <select name="jk" required>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Aktivitas & Gaya Hidup</div>
+
+            <label>Aktivitas Fisik</label>
+            <select name="aktivitas" required>
+                <option value="sangat ringan">Sangat Ringan</option>
+                <option value="ringan">Ringan</option>
+                <option value="sedang">Sedang</option>
+                <option value="berat">Berat</option>
+            </select>
+
+            <p class="keterangan">
+                <strong>Sangat ringan:</strong> Duduk lama, kerja kantor minim gerak.<br>
+                <strong>Ringan:</strong> Jalan santai, aktivitas rumah tangga ringan.<br>
+                <strong>Sedang:</strong> Jalan cepat, bersepeda santai, senam ringan.<br>
+                <strong>Berat:</strong> Lari, olahraga intens, kerja fisik berat.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Faktor Risiko</div>
+
+            <label>Riwayat Keluarga Diabetes</label>
+            <div class="radio-group">
+                <label><input type="radio" name="riwayat" value="ya" required> Ya</label>
+                <label><input type="radio" name="riwayat" value="tidak" checked> Tidak</label>
+            </div>
+
+            <label>Pola Makan Tidak Sehat</label>
+            <div class="radio-group">
+                <label><input type="radio" name="pola_makan" value="tidak_sehat"> Ya</label>
+                <label><input type="radio" name="pola_makan" value="sehat" checked> Tidak</label>
+            </div>
+        </div>
+
+        <button type="submit">Hitung Sekarang</button>
+    </form>
+
+    {% if hasil %}
+    <div class="hasil">
+        <h3>Hasil Perhitungan</h3>
+        <p><strong>IMT:</strong> {{ hasil.imt }} ({{ hasil.kategori_imt }})</p>
+        <p><strong>BMR:</strong> {{ hasil.bmr }} kkal</p>
+        <p><strong>TDEE:</strong> {{ hasil.tdee }} kkal/hari</p>
+        <p><strong>Skor Risiko:</strong> {{ hasil.skor }}</p>
+        <p class="risiko {{ hasil.warna }}">{{ hasil.kategori_risiko }}</p>
+        <p class="interpretasi">{{ hasil.interpretasi }}</p>
+    </div>
+    {% endif %}
+
+</div>
+</body>
+</html>
