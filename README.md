@@ -1,4 +1,4 @@
-# Aplikasi Skrining Risiko Diabetes
+# NutriRisk-ID
 
 Aplikasi web berbasis Flask untuk menghitung IMT, BMR, TDEE,
 dan estimasi risiko diabetes secara sederhana.
